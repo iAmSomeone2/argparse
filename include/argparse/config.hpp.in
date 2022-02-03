@@ -1,0 +1,14 @@
+#pragma once
+
+#mesondefine ARGPARSE_LONG_VERSION_ARG_ONLY
+
+namespace argparse {
+static const char VERSION_MAJOR[] = "@major_version@";
+
+static const char VERSION_MINOR[] = "@minor_version@";
+
+static const char VERSION_TAG[] = "@version_tag@";
+
+/** \brief String containing the value of the version of argparse in use */
+static const char VERSION_STR[] = "@version@";
+} // namespace argparse
