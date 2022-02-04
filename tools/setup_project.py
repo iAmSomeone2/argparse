@@ -8,7 +8,8 @@ from enum import Enum
 _VERSION_FILE = "VERSION.txt"
 """
 Name of file to read version info from
-...
+
+.. note::
 This is the file name only. It is not a full path.
 """
 
@@ -21,6 +22,8 @@ class _ConfigSys(Enum):
 
 def _set_up_meson():
     """
+    .. py:function:: 
+
     Set up the project using the Meson configuration system.
     """
 

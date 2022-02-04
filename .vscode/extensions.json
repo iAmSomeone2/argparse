@@ -6,6 +6,7 @@
         "asabil.meson",
         "ms-python.python",
         "redhat.vscode-yaml",
-        "yzhang.markdown-all-in-one"
+        "yzhang.markdown-all-in-one",
+        "xaver.clang-format"
     ]
 }

@@ -1,0 +1,12 @@
+site_name: argparse
+site_url: http://localhost:8080
+theme: readthedocs
+
+plugins:
+  - search:
+      indexing: 'sections'
+
+nav:
+  - index.md
+  - quick_start.md
+  - legal/license.md

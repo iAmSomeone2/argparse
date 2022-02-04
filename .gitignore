@@ -692,9 +692,8 @@ _deps
 # ------------------------------- Meson --------------------------------------------
 
 # Meson keeps all generated files in the build directory unless manually configured
-# otherwise.
-#
-# Use the ignore directives for your chosen build system instead.
+# otherwise. Additionally, it generates an appropriate .gitignore in the build directory
+# in case it's needed.
 
 # ------------------------------- Ninja --------------------------------------------
 
