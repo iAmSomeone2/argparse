@@ -30,7 +30,13 @@ SOFTWARE.
 */
 #pragma once
 
-#include <argparse/config.hpp>
+/* 
+  Defines ARGPARSE_LONG_VERSION_ARG_ONLY if 'LONG_VERSION_ARGS_ONLY'
+  ('long_version_args_only' in Meson) is enabled in the build system.
+ */
+#if @LONG_VERSION_ARGS_ONLY@ == True
+#define ARGPARSE_LONG_VERSION_ARG_ONLY
+#endif
 
 #include <algorithm>
 #include <any>
@@ -54,6 +60,15 @@ SOFTWARE.
 #include <vector>
 
 namespace argparse {
+
+/**
+ * \brief argparse version string
+ * 
+ * \details Format: MAJOR.MINOR.PATCH-TWEAK/TAG
+ * 
+ * \example 1.2.7-SNAPSHOT
+ */
+static const char VERSION[] = "@version@";
 
 namespace details { // namespace for helper methods
 

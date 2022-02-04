@@ -1,16 +1,33 @@
-cmake_minimum_required(VERSION 3.8)
+# ====================================== Project Information ====================================
+cmake_minimum_required(VERSION 3.12)
 
-project(argparse VERSION 1.0.0 LANGUAGES CXX)
+project("argparse" VERSION "0.0.0" LANGUAGES CXX)
 set("PROJECT_DESCRIPTION" "A single header argument parser for C++17")
 set("PROJECT_HOMEPAGE_URL" "https://github.com/p-ranav/argparse")
 
-option(ARGPARSE_BUILD_TESTS OFF)
-option(ARGPARSE_LONG_VERSION_ARG_ONLY OFF)
+# TODO: Set project version via version.txt file
+file(READ "./VERSION.txt" PROJECT_VERSION)
 
+# ======================================== Options & Config =====================================
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
+
+option(SNAPSHOT_BUILD
+       "Treat build as a snapshot of current, ongoing development."
+       OFF)
+option(ARGPARSE_BUILD_TESTS
+       "Build argparse\'s unit tests"
+       OFF)
+option(ARGPARSE_LONG_VERSION_ARG_ONLY
+       "Configure argparse to only allow long-form arguments."
+       OFF)
+
 string(REPLACE "/${CMAKE_LIBRARY_ARCHITECTURE}" "" CMAKE_INSTALL_LIBDIR_ARCHIND "${CMAKE_INSTALL_LIBDIR}")
 
+# ========================================== Build Targets ======================================
+
+# ------------------------------------- argparse Header Library ---------------------------------
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/include/argparse/argparse.hpp")
 
 add_library(argparse INTERFACE)
 add_library(argparse::argparse ALIAS argparse)
@@ -25,10 +42,12 @@ target_include_directories(argparse INTERFACE
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>)
 
-
+# ------------------------------------------- Unit Tests ----------------------------------------
 if(ARGPARSE_BUILD_TESTS)
   add_subdirectory(test)
 endif()
+
+# ===================================== Packaging & Installation ================================
 
 install(TARGETS argparse EXPORT argparseConfig)
 install(EXPORT argparseConfig

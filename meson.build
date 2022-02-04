@@ -2,59 +2,69 @@
 
 # -------------------------- Initialize Project --------------------------
 project('argparse', 'cpp',
-  version : '2.2-SM23',
   default_options : [
     'warning_level=3',
-    'c_std=c17',
     'cpp_std=c++17'
   ],
   license: 'MIT',
-  meson_version: '>=0.58')
+  meson_version: '>=0.59')
+
+# Import filesystem (fs) module
+fs = import('fs',
+            required: false,
+            disabler: true)
 
 # ------------------------- Main Project Variables -----------------------
+# Read project version from VERSION.txt.
+ver_file = 'VERSION.txt'
+if fs.found() and fs.exists(ver_file) 
+    version = fs.read(ver_file)
+else
+    version = '0.0.0'
+endif
+
+# TODO: Add build # tag for dev-branch builds on CI systems
+
 project_name = 'argparse'
-project_major_ver = '2'
-project_minor_ver = '2'
-project_tag = 'SM23'
-project_version = f'@project_major_ver@.@project_minor_ver@-@project_tag@'
 project_desc = 'A single header argument parser for C++17'
 project_url = 'https://github.com/p-ranav/argparse'
 
 # ----------------------- Set project info in summary --------------------
 summary({
         'Name': project_name,
-        'Version': project_version,
+        'Version': version,
         'Description': project_desc,
         'Homepage URL': project_url
         }, section: 'Project Information')
 
 # --------------------- Project options and configuration ----------------
+
+# ++++++++++++++++++++++++++++++ Read Options ++++++++++++++++++++++++++++
+# Allow enabling unit tests
+unit_tests = get_option('enable_unit_tests')
+
+# Allow enabling ARGPARSE_LONG_VERSION_ARG_ONLY
+long_version_args_only = get_option('long_version_args_only')
+
+# +++++++++++++++++++++++++++ Init Config Data +++++++++++++++++++++++++++
 config_data = configuration_data()
 
-config_data.set('major_version', project_major_ver)
-config_data.set('minor_version', project_minor_ver)
-config_data.set('version_tag', project_tag)
-config_data.set('version', project_version)
-
-# Allow toggling tests
-set_variable('build_tests', get_option('build_tests'))
-
-# Allow setting ARGPARSE_LONG_VERSION_ARG_ONLY
-set_variable('long_args_only', get_option('long_version_args_only'))
-config_data.set('ARGPARSE_LONG_VERSION_ARG_ONLY', long_args_only)
-
-# ======================== Build Project Targets =========================
+config_data.set('LONG_VERSION_ARGS_ONLY', long_version_args_only.enabled())
+config_data.set('version', version)
 
 # ------------------ Set project configuration info in summary -----------
 summary({
-        'Build tests': build_tests,
-        'Allow Long Version Arguments Only': long_args_only
+        'Snapshot build': snapshot_build,
+        'Build tests': unit_tests,
+        'Allow Long Version Arguments Only': long_version_args_only
         }, section: 'Configuration')
+
+# ======================== Build Project Targets =========================
 
 # -------------------------- 'include' Targets ---------------------------
 subdir('include')
 
 # ---------------------------- Target: tests -----------------------------
-if build_tests
+if unit_tests.enabled()
     subdir(test)
 endif

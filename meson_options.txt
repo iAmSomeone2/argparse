@@ -1,4 +1,9 @@
-option('build_tests', type: 'boolean', value: false,
-      description: 'Build argparse\'s unit tests')
-option('long_version_args_only', type: 'boolean', value: false,
-      description: 'Configure argparse to only allow long-form arguments.')
+option('enable_unit_tests',
+       description: 'Enable and build argparse\'s unit tests',
+       type: 'boolean',
+       value: false)
+
+option('long_version_args_only',
+       description: 'Configure argparse to only allow long-form arguments.',
+       type: 'boolean',
+       value: false)
