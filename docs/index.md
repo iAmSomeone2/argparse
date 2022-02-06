@@ -19,4 +19,4 @@ date: 2022-02-04
 
 ## Get Started
 
- - [Quick Start](./quick_start.md)
+ - [Quick Start](getting_started/quick_start.md)

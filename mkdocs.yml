@@ -7,6 +7,8 @@ plugins:
       indexing: 'sections'
 
 nav:
-  - index.md
-  - quick_start.md
-  - legal/license.md
+  - Home: 'index.md'
+  - Getting Started:
+    - Quick Start: 'getting_started/quick_start.md'
+  - Legal:
+    - Project License: 'legal/license.md'
